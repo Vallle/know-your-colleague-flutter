@@ -8,16 +8,18 @@ class GameFinishedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(context, SlideRightRoute(page: DashboardPage()), ModalRoute.withName(''));
-          },
-          child: const Text('Dashboard'),
-        ),
-      ),
+    return Column(
+      children: [
+        Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(context, SlideRightRoute(page: DashboardPage()), ModalRoute.withName(''));
+              },
+              child: const Text('Dashboard'),
+            ),
+          ),
+        Text('Du fikk: $score poeng')
+      ],
     );
   }
 }
