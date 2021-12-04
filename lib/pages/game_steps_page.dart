@@ -32,6 +32,7 @@ class _GameStepsPageState extends State<GameStepsPage> {
       return GameFinishedPage(score);
     }
     GameData game =  games.removeLast();
+    game.options.shuffle();
     return Column(
       children: <Widget>[SizedBox(
         height: 260,
