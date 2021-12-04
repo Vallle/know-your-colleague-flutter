@@ -20,7 +20,8 @@ class GameFinishedPage extends StatelessWidget {
             children: _allScoreRoundsAsWidgets(scoreRounds),
           );
         } else if (snapshot.hasError) {
-          return const Center(child: Text('Da smetter vi inn noen bilder :\)'));
+          return const Center(
+              child: Text('Klarte ikke å finne poeng historikk :/'));
         } else {
           return const Center(child: CircularProgressIndicator());
         }
@@ -43,7 +44,7 @@ class GameFinishedPage extends StatelessWidget {
 List<Widget> _allScoreRoundsAsWidgets(List<ScoreRound> scoreRounds) {
   return scoreRounds
       .map((scoreRound) => ListTile(
-            title: Text('${scoreRound.points}'),
+            title: Text('${scoreRound.points} - ${scoreRound.date}'),
           ))
       .toList();
 }

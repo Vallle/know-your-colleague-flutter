@@ -15,7 +15,7 @@ class GamePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: FutureBuilder(
-        future: _getGames(1), // TODO : Change this to 10
+        future: _getGames(10),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             return GameStepsPage(snapshot.data);
