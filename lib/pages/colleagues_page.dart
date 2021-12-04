@@ -27,7 +27,7 @@ class ColleaguesPage extends StatelessWidget {
               children: _allColleaguesAsImageWidgets(imageUrls),
             );
           } else if (snapshot.hasError) {
-            return const Center(child: Text('Funket ikke :('));
+            return const Center(child: Text('Funket ikke enda :('));
           } else {
             return const Center(child: CircularProgressIndicator());
           }
