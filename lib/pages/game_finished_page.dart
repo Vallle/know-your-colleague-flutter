@@ -11,26 +11,20 @@ class GameFinishedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint('\x1B[32mScore is: $score\x1B[0m');
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Scoreboard"),
-      ),
-      body: FutureBuilder(
-        future: _saveAndGetScore(score),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            List<ScoreRound> scoreRounds = snapshot.data;
-            return ListView(
-              children: _allScoreRoundsAsWidgets(scoreRounds),
-            );
-          } else if (snapshot.hasError) {
-            return const Center(
-                child: Text('Da smetter vi inn noen bilder :\)'));
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
+    return FutureBuilder(
+      future: _saveAndGetScore(score),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.hasData) {
+          List<ScoreRound> scoreRounds = snapshot.data;
+          return ListView(
+            children: _allScoreRoundsAsWidgets(scoreRounds),
+          );
+        } else if (snapshot.hasError) {
+          return const Center(child: Text('Da smetter vi inn noen bilder :\)'));
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
     );
 
     /*Center(
