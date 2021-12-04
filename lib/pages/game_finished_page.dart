@@ -36,7 +36,7 @@ class GameFinishedPage extends StatelessWidget {
     /*Center(
         child: ElevatedButton(
           onPressed: () {
-            Navigator.of(context).push(_createRoute());
+            Navigator.pushAndRemoveUntil(context, SlideRightRoute(page: DashboardPage()), ModalRoute.withName(''));
           },
           child: const Text('Dashboard'),
         ),
@@ -72,7 +72,7 @@ Future<List<ScoreRound>> _saveAndGetScore(score) async {
     debugPrint('\x1B[32mScore is: ${element.date} - ${element.points} \x1B[0m');
   }
 
-  scoresList.sort((x,y) => y.points - x.points);
+  scoresList.sort((x, y) => y.points - x.points);
   return scoresList;
 }
 
