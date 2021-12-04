@@ -13,7 +13,7 @@ class GamePage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            Navigator.push(context, SlideRightRoute(page: GameFinishedPage(10)));
+            Navigator.pushReplacement(context, SlideRightRoute(page: GameFinishedPage(10)));
           },
           child: const Text('Ferdig'),
         ),
