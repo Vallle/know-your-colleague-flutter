@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:know_your_colleague_flutter/pages/dashboard_page.dart';
+import 'package:know_your_colleague_flutter/transitions/slide_transitions.dart';
 
 class GameFinishedPage extends StatelessWidget {
   const GameFinishedPage(this.score,{Key? key}) : super(key: key);
@@ -12,19 +13,11 @@ class GameFinishedPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            Navigator.of(context).push(_createRoute());
+            Navigator.pushAndRemoveUntil(context, SlideRightRoute(page: DashboardPage()), ModalRoute.withName(''));
           },
           child: const Text('Dashboard'),
         ),
       ),
     );
   }
-}
-Route _createRoute() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const DashboardPage(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return child;
-    },
-  );
 }
