@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:know_your_colleague_flutter/pages/colleagues_page.dart';
+import 'package:know_your_colleague_flutter/pages/dashboard_page.dart';
 import 'package:know_your_colleague_flutter/theme/material_color_generator.dart';
 import 'package:know_your_colleague_flutter/theme/palette.dart';
 
@@ -18,7 +19,7 @@ class MainAppWidget extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: generateMaterialColor(Palette.primary),
       ),
-      home: const ColleaguesPage('Alle ITverkets ansikter'),
+      home: const DashboardPage(),
     );
   }
 }
