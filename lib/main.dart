@@ -18,6 +18,12 @@ class MainAppWidget extends StatelessWidget {
       title: 'Know your colleague',
       theme: ThemeData(
         primarySwatch: generateMaterialColor(Palette.primary),
+        scaffoldBackgroundColor: generateMaterialColor(Palette.background),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            primary: generateMaterialColor(Palette.secondary)
+          ),
+        )
       ),
       home: const DashboardPage(),
     );
