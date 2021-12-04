@@ -27,7 +27,7 @@ class ColleaguesPage extends StatelessWidget {
               children: _allColleaguesAsImageWidgets(imageUrls),
             );
           } else if (snapshot.hasError) {
-            return const Center(child: Text('Funket ikke :('));
+            return const Center(child: Text('Da smetter vi inn noen bilder :\)'));
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -66,6 +66,6 @@ class ColleaguesPage extends StatelessWidget {
 
   Future<http.Response> _fetchPeople() {
     return http.get(Uri.parse(
-        'https://url-to-api-will-be-provided.net'));
+        'https://employee-image-provider.azurewebsites.net/api/fetchallemployeeimageurls?code=goLWvtqQUZPhvDSlHEQkVlrH4JJngoZIVdVojOgGSMMJgXIGLzJjBQ=='));
   }
 }
