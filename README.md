@@ -1,8 +1,10 @@
-# know_your_colleague_flutter
+# Team TODO
+
+## know_your_colleague_flutter
 
 ITverker, know your colleague!
 
-## Getting Started
+### Getting Started
 
 This project is a starting point for a Flutter application.
 
@@ -15,7 +17,7 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## Fagdag 04.12.2021
+### Fagdag 04.12.2021
 
 Bruk koden i dette repository'et til å få en tjuvstart!
 
