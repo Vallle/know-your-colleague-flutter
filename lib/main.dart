@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:know_your_colleague_flutter/pages/colleagues_page.dart';
+import 'package:know_your_colleague_flutter/pages/main_menu_page.dart';
 import 'package:know_your_colleague_flutter/theme/material_color_generator.dart';
 import 'package:know_your_colleague_flutter/theme/palette.dart';
 
@@ -14,11 +14,11 @@ class MainAppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Know your colleague',
+      title: 'Navneleken',
       theme: ThemeData(
         primarySwatch: generateMaterialColor(Palette.primary),
       ),
-      home: const ColleaguesPage('Alle ITverkets ansikter'),
+      home: const MainMenuPage('Velg modus'),
     );
   }
 }

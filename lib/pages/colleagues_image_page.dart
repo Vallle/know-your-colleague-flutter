@@ -1,13 +1,16 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:know_your_colleague_flutter/domain/colleague.dart';
+import 'package:know_your_colleague_flutter/utils/http_methods.dart';
 
-class ColleaguesPage extends StatelessWidget {
-  const ColleaguesPage(this.title, {Key? key}) : super(key: key);
+/// Dette er en StatelessWidget. Det er den enkleste komponenten man kan bruke
+/// til å lage sin egen Widget. Denne typen widget kan ikke endre seg selv.
+/// Men den kan eventuelt bygges på ny med andre verdier som konstruktør-params
+/// dersom den er child av en annen widget.
+class ColleaguesImagePage extends StatelessWidget {
+  const ColleaguesImagePage(this.title, {Key? key}) : super(key: key);
 
   final String title;
 
@@ -27,7 +30,7 @@ class ColleaguesPage extends StatelessWidget {
               children: _allColleaguesAsImageWidgets(imageUrls),
             );
           } else if (snapshot.hasError) {
-            return const Center(child: Text('Funket ikke :('));
+            return const Center(child: Text('Noe gikk galt ved API-kallet'));
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -42,19 +45,15 @@ class ColleaguesPage extends StatelessWidget {
               height: 60,
               width: 60,
               child: FittedBox(
-                child: CachedNetworkImage(imageUrl: url),
                 fit: BoxFit.fill,
+                child: CachedNetworkImage(imageUrl: url),
               ),
             ))
         .toList();
   }
 
   Future<List<String>> _getImageUrls() async {
-    dynamic response = await _fetchPeople();
-    List<dynamic> colleaguesJson = jsonDecode(response.body);
-
-    List<Colleague> colleagues =
-        colleaguesJson.map((e) => Colleague.fromJson(e)).toList();
+    List<Colleague> colleagues = await fetchColleagues();
 
     List<String> imageUrls =
         colleagues.map((element) => element.imageUrl).toList();
@@ -62,10 +61,5 @@ class ColleaguesPage extends StatelessWidget {
     log("Got the following image URLs: $imageUrls");
 
     return imageUrls;
-  }
-
-  Future<http.Response> _fetchPeople() {
-    return http.get(Uri.parse(
-        'https://url-to-api-will-be-provided.net'));
   }
 }
