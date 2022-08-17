@@ -20,11 +20,14 @@ class ColleaguesNamePage extends StatefulWidget {
 }
 
 class _ColleaguesNamePageState extends State<ColleaguesNamePage> {
-  int _currentPage = 0;
+  int _currentPage = 1;
+  int _numberOfPages = 1;
+
   List<String> _names = [];
   Object? _fetchNamesException;
   String? _highlightedWidgetName;
 
+  final _namesPerPage = 10;
   final PageController _controller = PageController();
 
   @override
@@ -32,7 +35,7 @@ class _ColleaguesNamePageState extends State<ColleaguesNamePage> {
     super.initState();
 
     () async {
-      await _getAndSetMockNames(); // Replace with _getAndSetNames()
+      await _getAndSetNames();
     }();
   }
 
@@ -65,19 +68,56 @@ class _ColleaguesNamePageState extends State<ColleaguesNamePage> {
   }
 
   Future<void> _onNextButtonPressed() {
-    if (_currentPage < 2) {
+    if (_currentPage < _numberOfPages) {
       _currentPage += 1;
       return _controller.nextPage(
-        duration: const Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.linear,
       );
     } else {
-      _currentPage = 0;
+      _currentPage = 1;
       return _controller.animateToPage(
         0,
-        duration: const Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.linear,
       );
+    }
+  }
+
+  Future<void> _getAndSetNames() async {
+    List<Colleague> colleagues = [];
+    dynamic exception;
+
+    try {
+      colleagues = await fetchColleagues();
+    } catch (ex, stacktrace) {
+      exception = ex;
+      log("Exception $ex");
+      log("StackTrace $stacktrace");
+    }
+
+    List<String> names = colleagues.map((element) => element.name).toList();
+
+    log("Got the following names: $names");
+
+    setState(() {
+      _names = names;
+      _numberOfPages = (names.length / _namesPerPage).ceil();
+      _fetchNamesException = exception;
+    });
+  }
+
+  Widget _buildPageBody() {
+    if (_names.isNotEmpty) {
+      return PageView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: _controller,
+        children: _buildNameWidgets(context, _names),
+      );
+    } else if (_fetchNamesException != null) {
+      return const Center(child: Text('Noe gikk galt ved API-kallet'));
+    } else {
+      return const Center(child: CircularProgressIndicator());
     }
   }
 
@@ -103,56 +143,20 @@ class _ColleaguesNamePageState extends State<ColleaguesNamePage> {
       }
     }).toList();
 
-    return [
-      Column(
-        children: nameWidgets.sublist(0, 4),
-      ),
-      Column(
-        children: nameWidgets.sublist(4, 8),
-      ),
-      Column(
-        children: nameWidgets.sublist(8, 12),
-      ),
-    ];
-  }
+    return List.generate(
+      _numberOfPages,
+      (index) {
+        int nameIndexStart = index * _namesPerPage;
+        bool isLastPage = (index + 1) == _numberOfPages;
 
-  Future<void> _getAndSetMockNames() async {
-    setState(() {
-      _names = List<String>.generate(12, (index) => "Navn #${index + 1}");
-    });
-  }
-
-  Future<void> _getAndSetNames() async {
-    List<Colleague> colleagues = [];
-    dynamic exception;
-
-    try {
-      colleagues = await fetchColleagues();
-    } catch (ex) {
-      exception = ex;
-    }
-
-    List<String> names = colleagues.map((element) => element.name).toList();
-
-    log("Got the following names: $names");
-
-    setState(() {
-      _names = names;
-      _fetchNamesException = exception;
-    });
-  }
-
-  Widget _buildPageBody() {
-    if (_names.isNotEmpty) {
-      return PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _controller,
-        children: _buildNameWidgets(context, _names),
-      );
-    } else if (_fetchNamesException != null) {
-      return const Center(child: Text('Noe gikk galt ved API-kallet'));
-    } else {
-      return const Center(child: CircularProgressIndicator());
-    }
+        if (isLastPage) {
+          return ListView(children: nameWidgets.sublist(nameIndexStart));
+        } else {
+          return ListView(
+              children: nameWidgets.sublist(
+                  nameIndexStart, nameIndexStart + _namesPerPage));
+        }
+      },
+    );
   }
 }

@@ -45,7 +45,7 @@ class ColleaguesImagePage extends StatelessWidget {
               height: 60,
               width: 60,
               child: FittedBox(
-                fit: BoxFit.fill,
+                fit: BoxFit.contain,
                 child: CachedNetworkImage(imageUrl: url),
               ),
             ))

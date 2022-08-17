@@ -20,12 +20,12 @@ class MainMenuPage extends StatelessWidget {
           _modeButton(
             context,
             const ColleaguesImagePage('Alle ITverkets ansikter'),
-            "Page 1",
+            "Eksempel 1",
           ),
           _modeButton(
             context,
             const ColleaguesNamePage('Alle ITverkets navn'),
-            'Page 2',
+            'Eksempel 2',
           ),
         ],
       ),
